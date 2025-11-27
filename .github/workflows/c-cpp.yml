@@ -25,11 +25,11 @@ jobs:
     
     - name: Generate project files
       shell: cmd
-      run: $"%ENGINE_PATH%/Engine/Build/BatchFiles/Build.bat"  -projectfiles -project="%GITHUB_WORKSPACE%\PROJECT_NAME.uproject" -game -rocket -progress -log="%~dp0\Saved\Logs\UnrealVersionSelector-2025.05.07-00.56.10.log"
+      run: ${{env.ENGINE_PATH}}/Engine/Build/BatchFiles/Build.bat -projectfiles -project="%GITHUB_WORKSPACE%\PROJECT_NAME.uproject" -game -rocket -progress -log="%~dp0\Saved\Logs\UnrealVersionSelector-2025.05.07-00.56.10.log"
    
     - name: Generate intermediates and binaries
       shell: cmd
-      run: $"%ENGINE_PATH }}/Engine/Build/BatchFiles/Build.bat" "%GITHUB_WORKSPACE%\PROJECT_NAME.uproject" PROJECT_NAME Win64 Development
+      run: $"%ENGINE_PATH%/Engine/Build/BatchFiles/Build.bat" "%GITHUB_WORKSPACE%\PROJECT_NAME.uproject" PROJECT_NAME Win64 Development
     
     - name: Run tests editor
       run: $"%ENGINE_PATH%\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" %~dp0PROJECT_NAME.uproject -execcmds="Automation RunTests Project;Quit" -stdout -unattended -NOSPLASH -NullRHI -log -ABSLOG="%log_path%"
