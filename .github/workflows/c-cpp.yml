@@ -9,7 +9,7 @@ on:
   
 env:
   PROJECT_NAME: "GAS"
-  ENGINE_PATH: "C:/ProgramFiles/EpicGames/UE_5.6" 
+  ENGINE_PATH: "C:/Program Files/Epic Games/UE_5.6" 
   
 jobs:
   build:
