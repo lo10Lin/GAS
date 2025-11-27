@@ -10,6 +10,7 @@ on:
 env:
   PROJECT_NAME: "GAS"
   ENGINE_PATH: 'C:/"Program Files"/"Epic Games"/UE_5.6'
+  PROJECT_PATH: 'C:/Users/laure/Documents/GAS'
   
 jobs:
   build:
@@ -33,7 +34,7 @@ jobs:
     
     - name: Run tests editor
       shell: powershell
-      run: ${{env.ENGINE_PATH}}\Engine\Binaries\Win64\UnrealEditor-Cmd.exe %~dp0\${{env.PROJECT_NAME}}.uproject -execcmds="Automation RunTests Project;Quit" -stdout -unattended -NOSPLASH -NullRHI -log -ABSLOG="%log_path%"
+      run: ${{env.ENGINE_PATH}}\Engine\Binaries\Win64\UnrealEditor-Cmd.exe ${{env.PROJECT_PATH}}\${{env.PROJECT_NAME}}.uproject -execcmds="Automation RunTests Project;Quit" -stdout -unattended -NOSPLASH -NullRHI -log -ABSLOG="%log_path%"
     
     - name: Build
       shell: cmd
