@@ -1,10 +1,11 @@
 name: GAS
 
-on: workflow_dispatch
+on: 
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:  
 env:
   PROJECT_NAME: "GAS"
   ENGINE_PATH: "C:/Program Files/Epic Games/UE_5.6" 
