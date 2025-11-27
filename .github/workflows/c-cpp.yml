@@ -32,8 +32,8 @@ jobs:
       run: ${{env.ENGINE_PATH}}/Engine/Build/BatchFiles/Build.bat "%GITHUB_WORKSPACE%\${{env.PROJECT_NAME}}.uproject" ${{env.PROJECT_NAME}} Win64 Development
     
     - name: Run tests editor
+      shell: powershell
       run: ${{env.ENGINE_PATH}}\Engine\Binaries\Win64\UnrealEditor-Cmd.exe %~dp0${{env.PROJECT_NAME}}.uproject -execcmds="Automation RunTests Project;Quit" -stdout -unattended -NOSPLASH -NullRHI -log -ABSLOG="%log_path%"
-      shell: cmd
     
     - name: Build
       shell: cmd
