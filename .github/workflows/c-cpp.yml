@@ -19,6 +19,9 @@ jobs:
     steps:
     - name: Checkout Project
     - uses: actions/checkout@v4
+      with:
+        lfs: true
+        submodules: recursive
     
     - name: Generate project files
       shell: cmd
