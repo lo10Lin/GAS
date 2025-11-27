@@ -10,7 +10,7 @@ on:
 env:
   PROJECT_NAME: "GAS"
   ENGINE_PATH: 'C:/"Program Files"/"Epic Games"/UE_5.6'
-  PROJECT_PATH: 'C:/Users/laure/Documents/GAS'
+  PROJECT_PATH: 'C:\actions-runner\_work\GAS\GAS'
   
 jobs:
   build:
