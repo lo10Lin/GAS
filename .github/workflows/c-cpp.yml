@@ -25,20 +25,20 @@ jobs:
     
     - name: Generate project files
       shell: cmd
-      run: ${{env.ENGINE_PATH}}/Engine/Build/BatchFiles/Build.bat -projectfiles -project="%GITHUB_WORKSPACE%\${{PROJECT_NAME}}.uproject" -game -rocket -progress -log="%~dp0\Saved\Logs\UnrealVersionSelector-2025.05.07-00.56.10.log"
+      run: ${{env.ENGINE_PATH}}/Engine/Build/BatchFiles/Build.bat -projectfiles -project="%GITHUB_WORKSPACE%\${{env.PROJECT_NAME}}.uproject" -game -rocket -progress -log="%~dp0\Saved\Logs\UnrealVersionSelector-2025.05.07-00.56.10.log"
    
     - name: Generate intermediates and binaries
       shell: cmd
-      run: ${{env.ENGINE_PATH}}/Engine/Build/BatchFiles/Build.bat "%GITHUB_WORKSPACE%\${{PROJECT_NAME}}.uproject" ${{PROJECT_NAME}} Win64 Development
+      run: ${{env.ENGINE_PATH}}/Engine/Build/BatchFiles/Build.bat "%GITHUB_WORKSPACE%\${{env.PROJECT_NAME}}.uproject" ${{env.PROJECT_NAME}} Win64 Development
     
     - name: Run tests editor
-      run: ${{env.ENGINE_PATH}}\Engine\Binaries\Win64\UnrealEditor-Cmd.exe %~dp0${{PROJECT_NAME}}.uproject -execcmds="Automation RunTests Project;Quit" -stdout -unattended -NOSPLASH -NullRHI -log -ABSLOG="%log_path%"
+      run: ${{env.ENGINE_PATH}}\Engine\Binaries\Win64\UnrealEditor-Cmd.exe %~dp0${{env.PROJECT_NAME}}.uproject -execcmds="Automation RunTests Project;Quit" -stdout -unattended -NOSPLASH -NullRHI -log -ABSLOG="%log_path%"
       shell: cmd
     
     - name: Build
       shell: cmd
       run: ${{env.ENGINE_PATH}}\Engine\Build\BatchFiles\RunUAT.bat BuildCookRun `
-            -project="%GITHUB_WORKSPACE%\ProjectName.uproject" `
+            -project="%GITHUB_WORKSPACE%\${{env.PROJECT_NAME}}.uproject" `
             -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Development `
             -cook -allmaps -build -stage -pak -archive `
             -archivedirectory="%GITHUB_WORKSPACE%\Build"
