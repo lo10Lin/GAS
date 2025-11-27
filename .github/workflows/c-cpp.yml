@@ -1,23 +1,33 @@
-name: C/C++ CI
+name: GAS
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+env:
+  PROJECT_NAME: "GAS"
+  ENGINE_PATH: "C:/Program Files/Epic Games/UE_5.6" 
+  
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
+    - name: Checkout Project
     - uses: actions/checkout@v4
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    
+    - name: Generate project files
+      run: ${{ env.ENGINE_PATH }}/Engine/Build/BatchFiles/Build.bat  -projectfiles -project="%GITHUB_WORKSPACE%\PROJECT_NAME.uproject" -game -rocket -progress -log="%~dp0\Saved\Logs\UnrealVersionSelector-2025.05.07-00.56.10.log"
+    - name: Generate intermediates and binaries
+      run: ${{ env.ENGINE_PATH }}/Engine/Build/BatchFiles/Build.bat "%GITHUB_WORKSPACE%\PROJECT_NAME.uproject" ProjectName Win64 Development
+    - name: Run tests editor
+      run: ${{ env.ENGINE_PATH }}\Engine\Binaries\Win64\UnrealEditor-Cmd.exe %~dp0ProjectName.uproject -execcmds="Automation RunTests Project;Quit" -stdout -unattended -NOSPLASH -NullRHI -log -ABSLOG="%log_path%"
+    - name: Build
+      run: ${{ env.ENGINE_PATH }}\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun `
+            -project="%GITHUB_WORKSPACE%\ProjectName.uproject" `
+            -noP4 -platform=Win64 -clientconfig=Shipping -serverconfig=Development `
+            -cook -allmaps -build -stage -pak -archive `
+            -archivedirectory="%GITHUB_WORKSPACE%\Build"
+
